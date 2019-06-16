@@ -8,8 +8,7 @@ namespace CS.DomainEntity.Contracts.IRepository
     {
         IEnumerable<T> GetAll();
         T GetById(string id);
-        void Insert(T obj);
-        void Update(T obj);
+        void AddOrUpdate(string id,T obj);
         void Delete(string id);
     }
 }

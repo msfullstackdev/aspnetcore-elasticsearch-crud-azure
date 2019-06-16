@@ -9,8 +9,7 @@ namespace CS.DomainEntity.Contracts.IInfrastructre
     {
         IEnumerable<User> GetAll();
         User GetById(string id);
-        void Add(User user);
-        void Update(User user);
+        void AddorUpdate(User user);
         void Delete(string id);
 
     }
