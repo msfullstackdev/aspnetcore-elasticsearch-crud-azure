@@ -55,10 +55,12 @@ namespace CS.API.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, [FromBody] User user)
+        public async Task<ActionResult> Put(string id, [FromBody] User user)
         {
             if (user == null)
                 return BadRequest();
+
+            user.Id = id;
 
            await _service.AddorUpdateAsync(user);
 

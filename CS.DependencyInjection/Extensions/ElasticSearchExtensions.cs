@@ -13,7 +13,7 @@ namespace CS.DependencyInjection.Extensions
             this IServiceCollection services, IConfiguration configuration)
         {
             var url = configuration["ElasticSearch:Url"];
-            var defaultIndex = configuration["ElasticSearch:index"];
+            var defaultIndex = configuration["ElasticSearch:Index"];
 
             var userName = configuration["ElasticSearch:UserName"];
             var password = configuration["ElasticSearch:Password"];
