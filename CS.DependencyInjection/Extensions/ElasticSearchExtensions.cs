@@ -17,7 +17,9 @@ namespace CS.DependencyInjection.Extensions
 
             var settings = new ConnectionSettings(new Uri(url))
                 .DefaultIndex(defaultIndex).DefaultTypeName("_doc");
-                
+
+            settings.EnableHttpCompression();
+            settings.BasicAuthentication("elastic", "1aA$5425963*");
 
             var client = new ElasticClient(settings);
 

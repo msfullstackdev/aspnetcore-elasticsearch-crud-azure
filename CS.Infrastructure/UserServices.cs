@@ -4,6 +4,7 @@ using CS.DomainEntity.Entity;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CS.Infrastructure
 {
@@ -15,30 +16,30 @@ namespace CS.Infrastructure
             _userRepo = repository;
         }
 
-        public void AddorUpdate(User user)
+        public async Task AddorUpdateAsync(User user)
         {
-            _userRepo.AddOrUpdate(user.Id, user);
+          await  _userRepo.AddOrUpdateAsync(user.Id, user);
         }
 
 
-        public IEnumerable<User> GetAll()
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
-            var res = _userRepo.GetAll();
+            var res =await _userRepo.GetAllAsync();
 
             return res;
         }
 
-        public User GetById(string id)
+        public async Task<User> GetByIdAsync(string id)
         {
-            var res = _userRepo.GetById(id);
+            var res =await _userRepo.GetByIdAsync(id);
 
             return res;
         }
 
 
-        public void Delete(string id)
+        public async Task DeleteAsync(string id)
         {
-            _userRepo.Delete(id);
+            await _userRepo.DeleteAsync(id);
         }
     }
 }

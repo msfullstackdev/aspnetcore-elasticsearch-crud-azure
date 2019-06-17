@@ -3,6 +3,7 @@ using Nest;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CS.Repository
 {
@@ -12,31 +13,39 @@ namespace CS.Repository
         public GenericRepository(IElasticClient elasticClient)
         {
             _client = elasticClient;
+
         }
 
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            var res = _client.Search<T>();
+            try
+            {
+                var res = await _client.SearchAsync<T>(s => s.From(0).Size(1000).MatchAll());
+                return res.Documents;
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+            
+        } 
 
-            return res.Documents;
-        }
-
-        public T GetById(string id)
+        public async Task<T> GetByIdAsync(string id)
         {
            
-            var res = _client.Get<T>(new DocumentPath<T>(id));
+            var res =await _client.GetAsync<T>(new DocumentPath<T>(id));
 
             return res.Source;
         }
 
-        public void AddOrUpdate(string id,T obj)
+        public async Task AddOrUpdateAsync(string id,T obj)
         {
-            var res = _client.Index(obj,i=>i.Id(id));
+          var res=  await _client.IndexAsync(obj,i=>i.Id(id));
         }
 
-        public void Delete(string id)
+        public async Task DeleteAsync(string id)
         {
-            _client.Delete(new DocumentPath<T>(id));
+           await _client.DeleteAsync(new DocumentPath<T>(id));
         }
     }
 }

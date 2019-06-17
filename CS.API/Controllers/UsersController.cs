@@ -21,16 +21,18 @@ namespace CS.API.Controllers
         }
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<User>> Get()
+        public async Task<ActionResult<IEnumerable<User>>> Get()
         {
-            return Ok(_service.GetAll());
+            var res = await _service.GetAllAsync();
+
+            return Ok(res);
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<User> Get(string id)
+        public async Task<ActionResult<User>> Get(string id)
         {
-            User user = _service.GetById(id);
+            User user =await _service.GetByIdAsync(id);
 
             if (user == null)
                 return NotFound();
@@ -41,38 +43,38 @@ namespace CS.API.Controllers
 
         // POST api/values
         [HttpPost]
-        public ActionResult Post([FromBody] User user)
+        public async Task<ActionResult> Post([FromBody] User user)
         {
             if (user == null)
                 return BadRequest();
 
-            _service.AddorUpdate(user);
+           await _service.AddorUpdateAsync(user);
 
             return Ok();
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] User user)
+        public async Task<ActionResult> Put(int id, [FromBody] User user)
         {
             if (user == null)
                 return BadRequest();
 
-            _service.AddorUpdate(user);
+           await _service.AddorUpdateAsync(user);
 
             return Ok();
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(string id)
+        public async Task<ActionResult> Delete(string id)
         {
-            User user = _service.GetById(id);
+            User user =await _service.GetByIdAsync(id);
 
             if (user == null)
                 return NotFound();
 
-            _service.Delete(id);
+            await _service.DeleteAsync(id);
 
             return Ok();
         }

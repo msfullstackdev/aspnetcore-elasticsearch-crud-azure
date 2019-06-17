@@ -2,15 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CS.DomainEntity.Contracts.IInfrastructre
 {
     public interface IUserServices
     {
-        IEnumerable<User> GetAll();
-        User GetById(string id);
-        void AddorUpdate(User user);
-        void Delete(string id);
+       Task<IEnumerable<User>> GetAllAsync();
+        Task<User> GetByIdAsync(string id);
+        Task AddorUpdateAsync(User user);
+        Task DeleteAsync(string id);
 
     }
 }
