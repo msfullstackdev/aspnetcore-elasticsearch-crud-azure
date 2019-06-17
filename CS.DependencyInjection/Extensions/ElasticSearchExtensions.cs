@@ -12,11 +12,18 @@ namespace CS.DependencyInjection.Extensions
         public static void AddElasticsearch(
             this IServiceCollection services, IConfiguration configuration)
         {
-            var url = configuration["elasticsearch:url"];
-            var defaultIndex = configuration["elasticsearch:index"];
+            var url = configuration["ElasticSearch:Url"];
+            var defaultIndex = configuration["ElasticSearch:index"];
+
+            var userName = configuration["ElasticSearch:UserName"];
+            var password = configuration["ElasticSearch:Password"];
 
             var settings = new ConnectionSettings(new Uri(url))
                 .DefaultIndex(defaultIndex).DefaultTypeName("_doc");
+
+            settings.EnableHttpCompression();
+
+            settings.BasicAuthentication(userName,password);
 
             var client = new ElasticClient(settings);
 
