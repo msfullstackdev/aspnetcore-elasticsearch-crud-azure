@@ -18,15 +18,9 @@ namespace CS.Repository
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            try
-            {
                 var res = await _client.SearchAsync<T>(s => s.From(0).Size(1000).MatchAll());
                 return res.Documents;
-            }
-            catch(Exception e)
-            {
-                throw e;
-            }
+           
             
         } 
 
