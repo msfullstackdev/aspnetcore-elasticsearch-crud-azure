@@ -13,13 +13,19 @@ namespace CS.DependencyInjection
 {
     public static class Config
     {
-        public static IServiceCollection UpdateServiceCollection(this IServiceCollection services,IConfiguration configuration)
+        public static IServiceCollection UpdateServiceCollection(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddElasticsearch(configuration);
 
-            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = configuration["Redis:Connection"];
+                options.InstanceName = configuration["Redis:InstanceName"];
+            });
 
-            services.AddTransient<IUserServices, UserServices>();
+            services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+            services.AddSingleton<IUserServices, UserServices>();
 
             return services;
         }
