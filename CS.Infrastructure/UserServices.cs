@@ -18,6 +18,9 @@ namespace CS.Infrastructure
 
         public async Task AddorUpdateAsync(User user)
         {
+            if (string.IsNullOrEmpty( user.Id))
+            user.Id = Guid.NewGuid().ToString("D");
+
           await  _userRepo.AddOrUpdateAsync(user.Id, user);
         }
 
